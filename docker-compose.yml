@@ -19,10 +19,10 @@ services:
     ports:
       - "8080:80"
     environment:
-      DB_SERVER: db
-      DB_NAME: andrea
-      DB_USER: andrea
-      DB_PASSWD: quequira
+      DB_SERVER: $(DB_SERVER)
+      DB_NAME: $(DB_NAME)
+      DB_USER: $(DB_USER)
+      DB_PASSWD: $(DB_PASSWD)
       PS_INSTALL_AUTO: 1
       PS_DEV_MODE: 1
       PS_DOMAIN: localhost:8080
@@ -38,9 +38,9 @@ services:
     ports:
       - "8081:80"
     environment:
-      PMA_HOST: db
+      PMA_HOST: $(PMA_HOST)
       PMA_USER: root
-      PMA_PASSWORD: rootpass
+      PMA_PASSWORD: $(PMA_PASSWORD)
     restart: always
 
 volumes:
