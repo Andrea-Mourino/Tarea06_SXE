@@ -23,9 +23,7 @@ services:
       DB_NAME: $(DB_NAME)
       DB_USER: $(DB_USER)
       DB_PASSWD: $(DB_PASSWD)
-      PS_INSTALL_AUTO: 1
-      PS_DEV_MODE: 1
-      PS_DOMAIN: localhost:8080
+      DB_HOST: $(DB_HOST)
     volumes:
       - prestashop_data:/var/www/html
     restart: always
