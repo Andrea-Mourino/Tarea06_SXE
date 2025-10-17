@@ -2,7 +2,6 @@ services:
   db:
     image: mariadb:10.6
     container_name: prestashop_db
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: $(MYSQL_ROOT_PASSWORD)
       MYSQL_DATABASE: $(MYSQL_DATABASE)
@@ -10,6 +9,13 @@ services:
       MYSQL_PASSWORD: $(MYSQL_PASSWORD)
     volumes:
       - db_data:/var/lib/mysql
+    restart: always
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-p$(MYSQL_ROOT_PASSWORD)" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
 
   prestashop:
     image: prestashop/prestashop
@@ -27,6 +33,12 @@ services:
     volumes:
       - prestashop_data:/var/www/html
     restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost/" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
 
   phpmyadmin:
     image: phpmyadmin
@@ -40,6 +52,12 @@ services:
       PMA_USER: root
       PMA_PASSWORD: $(PMA_PASSWORD)
     restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost/" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
 
 volumes:
   db_data:
