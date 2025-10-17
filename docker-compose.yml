@@ -9,13 +9,10 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 30s
-      timeout: 10s
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}" ]
+      interval: 10s
+      timeout: 5s
       retries: 5
-
-
-
 
   prestashop:
     image: prestashop/prestashop:8.1
@@ -28,7 +25,7 @@ services:
       DB_SERVER: db
       DB_NAME: ${MYSQL_DATABASE}
       DB_USER: ${MYSQL_USER}
-      DB_PASSWD: ${MYSQL_ROOT_PASSWORD}
+      DB_PASSWD: ${MYSQL_PASSWORD}
       PS_INSTALL_AUTO: 1
       PS_LANGUAGE: es
       PS_COUNTRY: ES
@@ -38,22 +35,17 @@ services:
     volumes:
       - ps_data:/var/www/html
 
-
-
-
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     depends_on:
       db:
         condition: service_healthy
     ports:
-      - "8081:80"
+      - "8082:80"
     environment:
       PMA_HOST: db
       PMA_USER: ${MYSQL_USER}
       PMA_PASSWORD: ${MYSQL_PASSWORD}
-
-
 
 volumes:
   db_data:
