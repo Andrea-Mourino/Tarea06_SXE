@@ -18,7 +18,7 @@ Creamos un fichero llamado docker-compose.yml dentro de Idea y definimos los  se
 
 <img width="465" height="411" alt="imagen" src="https://github.com/user-attachments/assets/93649e97-82a2-4af2-a151-04f402f4134e" />
 
-Usamos volumes para guardar los datos en caso de que se pierdan y lo usamos tanto en db como en prestashop. En cambio en PhPMyAdmin no es necesario ya que es solo una interfaz grafica y no se guarda datos.
+Usamos volumes para guardar los datos en caso de que se pierdan y lo usamos tanto en db como en prestashop. En cambio en PhPMyAdmin no es necesario ya que es solo una interfaz grafica y no se guardan datos.
 
 _
 
@@ -30,7 +30,25 @@ Use $(dato a ingresar) para que las contraseñas, user, etc lo llame desde el in
 
 ## Paso 3
 
+<img width="536" height="150" alt="imagen" src="https://github.com/user-attachments/assets/4b912a98-7dc3-47da-aa83-dd7d703771af" />
+
+Agregamos un healthcheck para db, prestashop y PhPMyAdmin para que los servicios sepan cuando arrancar y que se monitoree la salud continua del servicio (para comprobar que el servidor este operativo)
+
+
+
+## Paso 4
+
+<img width="311" height="79" alt="imagen" src="https://github.com/user-attachments/assets/987439bf-83d1-483e-85d7-7f1690e82bbe" />
+
+Añadimos dentro de depend_on > bd > condition: service_healthy para que espere a que el healthcheck sea correcto
+
+
+
+## Paso 5
+
 <img width="603" height="269" alt="Captura desde 2025-10-17 09-27-33" src="https://github.com/user-attachments/assets/8f1388a5-eb2d-4f92-a78a-ee376095087c" />
 
 Teniendo todo creado usamos el comando docker compose up para desplegarlo
+
+
 
