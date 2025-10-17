@@ -3,10 +3,10 @@ services:
     image: mariadb:10.6
     container_name: prestashop_db
     environment:
-      MYSQL_ROOT_PASSWORD: $(MYSQL_ROOT_PASSWORD)
-      MYSQL_DATABASE: $(MYSQL_DATABASE)
-      MYSQL_USER: $(MYSQL_USER)
-      MYSQL_PASSWORD: $(MYSQL_PASSWORD)
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: $(MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
     restart: always
@@ -26,11 +26,11 @@ services:
     ports:
       - "8080:80"
     environment:
-      DB_SERVER: $(DB_SERVER)
-      DB_NAME: $(DB_NAME)
-      DB_USER: $(DB_USER)
-      DB_PASSWORD: $(DB_PASSWORD)
-      DB_HOST: $(DB_HOST)
+      DB_SERVER: ${DB_SERVER}
+      DB_NAME: $(DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
     volumes:
       - prestashop_data:/var/www/html
     restart: always
@@ -50,9 +50,9 @@ services:
     ports:
       - "8081:80"
     environment:
-      PMA_HOST: $(PMA_HOST)
+      PMA_HOST: ${PMA_HOST}
       PMA_USER: root
-      PMA_PASSWORD: $(PMA_PASSWORD)
+      PMA_PASSWORD: ${PMA_PASSWORD}
     restart: always
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost/" ]
