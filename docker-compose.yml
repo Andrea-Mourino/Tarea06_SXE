@@ -4,15 +4,15 @@ services:
     container_name: prestashop_db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DATABASE: prestashop
-      MYSQL_USER: prestashop
-      MYSQL_PASSWORD: prestashoppass
+      MYSQL_ROOT_PASSWORD: $(MYSQL_ROOT_PASSWORD)
+      MYSQL_DATABASE: $(MYSQL_DATABASE)
+      MYSQL_USER: $(MYSQL_USER)
+      MYSQL_PASSWORD: $(MYSQL_PASSWORD)
     volumes:
       - db_data:/var/lib/mysql
 
   prestashop:
-    image: prestashop/prestashop:latest
+    image: prestashop/prestashop
     container_name: prestashop_app
     depends_on:
       - db
@@ -22,14 +22,14 @@ services:
       DB_SERVER: $(DB_SERVER)
       DB_NAME: $(DB_NAME)
       DB_USER: $(DB_USER)
-      DB_PASSWD: $(DB_PASSWD)
+      DB_PASSWORD: $(DB_PASSWD)
       DB_HOST: $(DB_HOST)
     volumes:
       - prestashop_data:/var/www/html
     restart: always
 
   phpmyadmin:
-    image: phpmyadmin:latest
+    image: phpmyadmin
     container_name: prestashop_phpmyadmin
     depends_on:
       - db
