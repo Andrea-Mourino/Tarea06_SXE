@@ -10,14 +10,14 @@ https://devdocs.prestashop-project.org/9/basics/installation/environments/docker
 
 <img width="209" height="117" alt="image" src="https://github.com/user-attachments/assets/e1b07027-4ee7-4527-88ed-0a5aa3dcc1a1" />
 
-Creamos un fichero llamado ```docker-compose.yml``` dentro de Idea y definimos los servicios ```PrestaShop```, ```db``` y ```PhPMyAdmin```. Tambien hice un fichero ```.env``` para guardar la informacion sensible del ```docker-compose.yml```
+Creamos un fichero llamado ```docker-compose.yml``` dentro de IntelliJ IDEA y definimos los servicios ```PrestaShop```, ```db``` y ```phpMyAdmin```. También hice un fichero ```.env``` para guardar la información sensible del ```docker-compose.yml```
 
 
 ### PrestaShop
 
 <img width="381" height="439" alt="image" src="https://github.com/user-attachments/assets/80491eb5-b768-4726-8b5a-f1d03a88afe4" />
 
-De primero definimos que version de ```PrestaShop``` queremos que en este caso es la 8.1 (Docker va a descargar esta imagen si no la tienes localmente). En ```depend_on``` hacemos que dependa de ```db``` y exponemos el puerto ```80``` del contenedor en el puerto ```8080``` de nuestra máquina local.
+De primero definimos que versión de ```PrestaShop``` queremos que en este caso es la 8.1 (Docker va a descargar esta imagen si no la tienes localmente). En ```depend_on``` hacemos que dependa de ```db``` y exponemos el puerto ```80``` del contenedor en el puerto ```8080``` de nuestra máquina local.
 
 - ```DB_SERVER: db``` > dirección del servidor de la base de datos. Como ambos servicios están en la misma red de Docker, podemos usar el nombre del servicio db
 - ```DB_NAME: ${MYSQL_DATABASE}``` > nombre de la base de datos que PrestaShop va a usar. Se toma del archivo .env
@@ -35,9 +35,9 @@ De primero definimos que version de ```PrestaShop``` queremos que en este caso e
 
 <img width="386" height="344" alt="image" src="https://github.com/user-attachments/assets/e800287d-6fc0-4571-aa33-6229885fe178" />
 
-Aqui en este caso le dice a Docker que use la imagen oficial de ```PhPMyAdmin``` y en ```depend_on``` es lo mismo que en el ```PrestaShop```. El puerto en este caso use la ```8082``` porque la 8081 estaba ocupada, otra cosa importante es que al buscar el localhost no se usa /es , aquí solo funciona con /
+Aqui en este caso le dice a Docker que use la imagen oficial de ```phpMyAdmin``` y en ```depend_on``` es lo mismo que en el ```PrestaShop```. El puerto en este caso use la ```8082``` porque la 8081 estaba ocupada, otra cosa importante es que al buscar el localhost no se usa /es/ , aquí solo funciona con /
 
-- ```PMA_HOST: db``` > host donde se encuentra la base de datos. Como ambos contenedores (phpmyadmin y db) están en la misma red Docker, podemos usar el nombre del servicio db.
+- ```PMA_HOST: db``` > host donde se encuentra la base de datos. Como ambos contenedores (phpmyadmin y db) están en la misma red Docker, podemos usar el nombre del servicio ```db```.
 - ```PMA_USER: ${MYSQL_USER}``` > usuario de la base de datos con el que phpMyAdmin se conectará.
 - ```PMA_PASSWORD: ${MYSQL_PASSWORD}``` > contraseña del usuario de la base de datos.
 
@@ -61,7 +61,7 @@ Use $(dato a ingresar) para que las contraseñas, user, etc sean llamadas desde 
 
 <img width="781" height="111" alt="image" src="https://github.com/user-attachments/assets/c78de133-d484-4d79-985f-5c3dbf247954" />
 
-Agregamos un ```healthcheck``` solo a ```db``` para que los servicios sepan cuando arrancar y que se monitoree la salud continua del servicio (para comprobar que el servidor este operativo) (no es necesario en ```PrestaShop``` y ```PhPMyAdmin``` ya que ```db``` engloba los dos al ser la base de datos central ദ്ദി ˉ͈̀꒳ˉ͈́ )✧)
+Agregamos un ```healthcheck``` solo a ```db``` para que los servicios sepan cuando arrancar y que se monitoree la salud continua del servicio (para comprobar que el servidor este operativo) (no es necesario en ```PrestaShop``` y ```phpMyAdmin``` ya que ```db``` engloba los dos al ser la base de datos central ദ്ദി ˉ͈̀꒳ˉ͈́ )✧)
 
 Tuve problemas para que la base da datos pillara mi contraseña del root asi que lo agregue directamente en el ```healthcheck```. El ```-uroot``` es para indicar al ususario con el que mysqladmin se conectara
 
